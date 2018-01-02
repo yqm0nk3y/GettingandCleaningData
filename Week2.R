@@ -60,3 +60,36 @@ readA = h5read("./data/example.h5", "foo/A")
 readB = h5read("./data/example.h5", "foo/foobaa/B")
 
 readA
+
+h5write(c(12,13,14), "./data/example.h5", "foo/A", index = list(1:3,1))
+
+h5read( "./data/example.h5", "foo/A")
+
+## read data from the web
+con = url("http://scholar.google.com/citations?user=HI-I6C0AAAAJ&hl=en")
+htmlCode = readLine(con)
+close(con)
+htmlCode
+
+library(httr)
+library(XML)
+url <- "http://scholar.google.com/citations?user=HI-I6C0AAAAJ&hl=en"
+html2 <- GET(url)
+content2 = content(html2, as= "text")
+parseHtml = htmlParse(content2, asText = TRUE)
+xpathSApply(parseHtml, "//title", xmlValue)
+
+#authentication
+pg1 = GET("http://httpbin.org/basic-auth/user/passwd", authenticate("user", "passwd"))
+pg1
+
+
+#handle
+google = handle("http://google.com")
+pg1 = GET(handle = google, path="/")
+pg2 = GET(handle = google, path="search")
+pg1
+pg2
+
+
+## get data from API
